@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Мінер</string>
+
+    <string name="mainFont">sans-serif</string>
+<!--  standart android font Roboto, type sans-serif -->
+
+</resources>
