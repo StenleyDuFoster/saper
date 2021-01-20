@@ -106,9 +106,9 @@ class PlayLayAdapter(val countCells: Int, private val callBack: CallBackFromAdap
             var linePosY = 0
             var localIndex = index
 
-            while (localIndex >= array2.size) {
+            while (localIndex >= (array2.size -1)) {
                 linePosY += 1
-                localIndex -= array2.size
+                localIndex -= array2.size -1
             }
             if (layEntity.hasBomb) {
                 array2[localIndex][linePosY] = 1
@@ -116,13 +116,12 @@ class PlayLayAdapter(val countCells: Int, private val callBack: CallBackFromAdap
 
         }
 
-
         var y = 0
         var x = position
 
-        while (x >= array2.size) {
+        while (x >= (array2.size -1)) {
             y += 1
-            x -= array2.size
+            x -= array2.size -1
         }
 
         try {
