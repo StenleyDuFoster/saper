@@ -1,6 +1,8 @@
 package com.stenleone.saper.adapter
 
 import android.graphics.Color
+import android.renderscript.Matrix2f
+import android.renderscript.Matrix3f
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import com.stenleone.saper.activity.MainActivity
 import com.stenleone.saper.entity.LayEntity
 import com.stenleone.saper.interfaces.CallBackFromAdapter
 import kotlinx.android.synthetic.main.cell_item_lay.view.*
+import java.lang.Exception
 import java.lang.IndexOutOfBoundsException
 import java.util.ArrayList
 import kotlin.math.sqrt
@@ -95,22 +98,97 @@ class PlayLayAdapter(val countCells: Int, private val callBack: CallBackFromAdap
     private fun findBomb(position: Int): Int {
 
         var bombFind = 0
-        val spanCount = sqrt(countCells.toDouble()).toInt()
 
-        val listLists = arrayListOf<ArrayList<ArrayList<LayEntity>>>()
-        val localItemList = itemsList
+        val array2: Array<IntArray> = Array(countCells / sqrt(countCells.toDouble()).toInt() + 1) { IntArray(sqrt(countCells.toDouble()).toInt()) { 0 } }
 
-        for (i in 1..spanCount) {
+        itemsList.forEachIndexed { index, layEntity ->
 
-            val lineList = ArrayList<LayEntity>()
+            var linePosY = 0
+            var localIndex = index
 
-            for (ii in 1..spanCount) {
-                lineList.add(localItemList[ii])
-                localItemList.removeAt(ii)
+            while (localIndex >= array2.size) {
+                linePosY += 1
+                localIndex -= array2.size
             }
-            
-            listLists.add(arrayListOf(lineList))
+            if (layEntity.hasBomb) {
+                array2[localIndex][linePosY] = 1
+            }
+
         }
+
+
+        var y = 0
+        var x = position
+
+        while (x >= array2.size) {
+            y += 1
+            x -= array2.size
+        }
+
+        try {
+            if (array2[x-1][y] == 1) {
+                bombFind += 1
+            }
+        } catch (e:Exception) {
+
+        }
+        try {
+            if (array2[x+1][y] == 1) {
+                bombFind += 1
+            }
+        } catch (e:Exception) {
+
+        }
+        try {
+            if (array2[x-1][y-1] == 1) {
+                bombFind += 1
+            }
+        } catch (e:Exception) {
+
+        }
+        try {
+            if (array2[x][y-1] == 1) {
+                bombFind += 1
+            }
+        } catch (e:Exception) {
+
+        }
+        try {
+            if (array2[x+1][y-1] == 1) {
+                bombFind += 1
+            }
+        } catch (e:Exception) {
+
+        }
+        try {
+            if (array2[x-1][y+1] == 1) {
+                bombFind += 1
+            }
+        } catch (e:Exception) {
+
+        }
+        try {
+            if (array2[x][y+1] == 1) {
+                bombFind += 1
+            }
+        } catch (e:Exception) {
+
+        }
+        try {
+            if (array2[x+1][y+1] == 1) {
+                bombFind += 1
+            }
+        } catch (e:Exception) {
+
+        }
+
+
+
+
+
+
+
+
 
         return bombFind
     }
