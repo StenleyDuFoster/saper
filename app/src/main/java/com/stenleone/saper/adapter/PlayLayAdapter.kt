@@ -182,14 +182,6 @@ class PlayLayAdapter(val countCells: Int, private val callBack: CallBackFromAdap
 
         }
 
-
-
-
-
-
-
-
-
         return bombFind
     }
 
