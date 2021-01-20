@@ -110,9 +110,14 @@ class PlayLayAdapter(val countCells: Int, private val callBack: CallBackFromAdap
                 linePosY += 1
                 localIndex -= array2.size -1
             }
-            if (layEntity.hasBomb) {
-                array2[localIndex][linePosY] = 1
+            try {
+                if (layEntity.hasBomb) {
+                    array2[localIndex][linePosY] = 1
+                }
+            } catch (e: Exception) {
+
             }
+
 
         }
 

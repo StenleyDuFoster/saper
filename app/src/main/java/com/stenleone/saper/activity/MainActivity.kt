@@ -28,6 +28,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), CallBackFromAdapter {
             sqrt(cellCount.toDouble()).toInt()
         )
         recycler.adapter = PlayLayAdapter(cellCount, this)
+        startTimer()
     }
 
     override fun setupClicks() {
@@ -43,13 +44,25 @@ class MainActivity : BaseActivity(R.layout.activity_main), CallBackFromAdapter {
             flagButton.setCardBackgroundColor(Color.RED)
             helmetButton.setCardBackgroundColor(ContextCompat.getColor(this, R.color.buttons))
         }
+
+        bombCountText.text = "Всього бомб: ${(sqrt(intent.extras?.get("params").toString().toDouble())).toInt()}"
+    }
+
+    private fun startTimer() {
+        Thread {
+            Thread.sleep(1000)
+            runOnUiThread {
+                timerTime.text = (timerTime.text.toString().toInt() + 1).toString()
+            }
+            startTimer()
+        }.start()
     }
 
     override fun win() {
-        showToast("Вы перемогли!")
+        showToast("Ви перемогли!")
     }
 
     override fun clickOnBomb() {
-        showToast("Вы програли!")
+        showToast("Ви програли!")
     }
 }
